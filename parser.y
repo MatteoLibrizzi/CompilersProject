@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "symbolTable.h"
 #include "utils.h"
+#include "output.h"
 %}
 %union{
     char* string;
@@ -14,40 +15,34 @@
 %token FIRST_SEC_END SECOND_SEC_END COLON PLUS MINUS SEMI_COLON COMMA SEPARATOR
 
 %%
-s: s1 FIRST_SEC_END s2 SECOND_SEC_END s3 { printf("Parser: Parsing completed successfully.\n"); }
+s: s1 FIRST_SEC_END s2 SECOND_SEC_END s3 { 
+    #ifdef DEBUG
+        printf("Parser: Parsing completed successfully.\n"); 
+    #endif
+    }
   ;
 
 s1: DATE { setDate($1); }
    ;
 
-s2: transaction s2 { printf("Parser: Found customer section.\n"); }
+s2: s2row s2 { }
    | /* eps */ { /* Empty rule for eps */ }
    ;
 
-transaction: SOC_SEC_NUM { printf("Found customer: %s\n", $1); Customer c = customerConstructor($1); setCurrentCustomer(c); addCustomerToList(c);}
-    | NAT_NUM COLON TRANSACTION_VALUE SEMI_COLON { printf("Amount: %ld\n", $3); addTransactionToCustomer(currentCustomer, $3); }
-    | SEPARATOR {}
+s2row: SOC_SEC_NUM { Customer c = customerConstructor($1); setCurrentCustomer(c); addCustomerToList(c);}
+    | NAT_NUM COLON TRANSACTION_VALUE SEMI_COLON { addTransactionToCustomer(currentCustomer, $3); }
+    | SEPARATOR { }
     | /* eps */
     ;
 
-customer: SOC_SEC_NUM orders SEPARATOR { printf("Found customer: %s\n", $1); Customer c = customerConstructor($1); setCurrentCustomer(c); addCustomerToList(c);}
-        ;
-
-orders: orders order { printf("Parser: Found order.\n"); }
-      | /* eps */ { /* Empty rule for eps */ }
-      ;
-
-order: NAT_NUM COLON TRANSACTION_VALUE SEMI_COLON { printf("Amount: %ld\n", $3); addTransactionToCustomer(currentCustomer, $3); }
-     ;
-
-s3: customer_data s3 { printf("Parser: Found customer data.\n"); }
+s3: customer_data s3 { }
    | /* eps */ { /* Empty rule for eps */ }
    ;
 
-customer_data: names COMMA SOC_SEC_NUM SEMI_COLON { printf("Parser: Found customer data\n"); }
+customer_data: names COMMA SOC_SEC_NUM SEMI_COLON { addCurrentNameListToCustomer($3); }
             ;
 
-names: PART_NAME names { printf("Parser: Found name - %s\n",$1); }
+names: names PART_NAME { addPartialNameToCurrentList ($2);}
      | /* eps */ { /* Empty rule for eps */ }
      ;
 
@@ -56,9 +51,7 @@ names: PART_NAME names { printf("Parser: Found name - %s\n",$1); }
 int main() {
     yyparse();
 
-    //printf("Date: %s\n", date);
-    //printCustomerListWithTransactions(customerListHead);
-    //printf("Curr customer: %s\n", currentCustomer->socialSecurityNumber);
+    output();
     return 0;
 }
 int yyerror (char* err) {

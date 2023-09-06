@@ -1,8 +1,8 @@
 
 tokens: out
 	./out < input.txt
-out: lex.yy.c parser.tab.c symbolTable.c utils.c
-	gcc $^ -o out
+out: lex.yy.c parser.tab.c symbolTable.c utils.c output.c
+	gcc -D DEBUG $^ -o out 
 
 parser.tab.c: parser.y
 	bison -d $^
