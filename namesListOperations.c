@@ -22,3 +22,12 @@ void addPartialNameToCurrentList (char* partialName) {
     }
     node->next = newNode;
 }
+
+void addCurrentNameListToCustomer (char* socialSecurityNumber) {
+    Customer c = findCustomerBySocialSecurityNumber(customerListHead, socialSecurityNumber);
+    if (c == NULL) {
+        return;
+    }
+    c->nameListHead = currentNamesHead;
+    currentNamesHead = NULL;
+}

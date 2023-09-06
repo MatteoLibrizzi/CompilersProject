@@ -7,8 +7,6 @@
 #include <string.h>
 #include "utils.h"
 
-void addCurrentNameListToCustomer (char* socialSecurityNumber);
-
 Customer customerConstructor (char* socialSecurityNumber);
 
 void setCurrentCustomer (Customer c);

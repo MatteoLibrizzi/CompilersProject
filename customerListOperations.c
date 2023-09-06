@@ -1,13 +1,5 @@
 #include "customerListOperations.h"
 
-void addCurrentNameListToCustomer (char* socialSecurityNumber) {
-    Customer c = findCustomerBySocialSecurityNumber(customerListHead, socialSecurityNumber);
-    if (c == NULL) {
-        return;
-    }
-    c->nameListHead = currentNamesHead;
-    currentNamesHead = NULL;
-}
 
 Customer customerConstructor (char* socialSecurityNumber) {
     Customer c = (Customer) malloc(sizeof(customer));
