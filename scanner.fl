@@ -1,0 +1,56 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include "parser.tab.h"
+
+char * extractPattern(int headerLength, int totalLength, char* text) {
+    int length = totalLength - headerLength;
+    char *value = (char *)malloc(length + 1);
+    strncpy(value, text + headerLength, length);
+    value[length] = '\0';
+    return value;
+}
+
+char* removeSpaceFromTransactionValue(char* transactionValueWithSpace) {
+    transactionValueWithSpace[1] = transactionValueWithSpace[0];
+    transactionValueWithSpace++;
+    return transactionValueWithSpace;
+}
+
+%}
+%option noyywrap
+
+%%
+"!!"            { return(FIRST_SEC_END); }
+"??"            { return(SECOND_SEC_END); }
+"DATA: "[0-9]{2}\/[0-9]{4}  {
+    char* date = extractPattern(6, yyleng, yytext);
+    yylval.string = date;
+    return(DATE);
+}
+[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z] {
+    yylval.string = extractPattern(0, yyleng, yytext);
+    return(SOC_SEC_NUM);
+}
+[1-9][0-9]*     {
+    yylval.number = strtol(yytext, NULL, 10);
+    return(NAT_NUM);
+}
+[+-]" "[1-9][0-9]*     {
+    yytext = removeSpaceFromTransactionValue(yytext);
+    yylval.number = strtol(yytext, NULL, 10);
+    return(TRANSACTION_VALUE);
+}
+":"               { return(COLON); }
+";"               { return(SEMI_COLON); }
+","               { return(COMMA); }
+"%%"              { return(SEPARATOR); }
+[A-Z][a-z]*     {
+    yylval.string = extractPattern(0, yyleng, yytext);
+    return(PART_NAME);
+}
+"+"             { return(PLUS); }
+"-"             { return(MINUS); }
+.|\n            ; // Ignora altri caratteri
+
+%%
