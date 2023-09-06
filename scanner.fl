@@ -49,8 +49,7 @@ char* removeSpaceFromTransactionValue(char* transactionValueWithSpace) {
     yylval.string = extractPattern(0, yyleng, yytext);
     return(PART_NAME);
 }
-"+"             { return(PLUS); }
-"-"             { return(MINUS); }
-.|\n            ; // Ignora altri caratteri
+[ \t\n]              ;
+.               { return(ERROR); } // Ignora altri caratteri
 
 %%

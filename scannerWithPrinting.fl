@@ -1,22 +1,52 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+#include "parser.tab.h"
+
+char * extractPattern(int headerLength, int totalLength, char* text) {
+    int length = totalLength - headerLength;
+    char *value = (char *)malloc(length + 1);
+    strncpy(value, text + headerLength, length);
+    value[length] = '\0';
+    return value;
+}
+
+char* removeSpaceFromTransactionValue(char* transactionValueWithSpace) {
+    transactionValueWithSpace[1] = transactionValueWithSpace[0];
+    transactionValueWithSpace++;
+    return transactionValueWithSpace;
+}
+
 %}
 %option noyywrap
 
 %%
-"!!"            { printf("Token: FIRST_SEC_END\n"); }
-"??"            { printf("Token: SECOND_SEC_END\n"); }
-"DATA: "[0-9]{2}\/[0-9]{4}  { printf("Token: DATE - %s\n", yytext + 6); }
-[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z] { printf("Token: SOC_SEC_NUM - %s\n", yytext); }
-[1-9][0-9]*     { printf("Token: NAT_NUM - %s\n", yytext); }
-":"               { printf("Token: COLON\n"); }
-";"               { printf("Token: SEMI_COLON\n"); }
-","               { printf("Token: COMMA\n"); }
-"%%"              { printf("Token: SEPARATOR\n"); }
-[A-Z][a-z]*     { printf("Token: PART_NAME - %s\n", yytext); }
-.|\n            ; // Ignora altri caratteri
+"!!"            { printf("%s\n", yytext); }
+"??"            { printf("%s\n", yytext); }
+"DATA: "[0-9]{2}\/[0-9]{4}  {
+    printf("%s\n", yytext);
+}
+[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z] {
+    printf("%s\n", yytext);
+}
+[1-9][0-9]*     {
+    printf("%s\n", yytext);
+}
+[+-]" "[1-9][0-9]*     {
+    printf("%s\n", yytext);
+}
+":"               { printf("%s\n", yytext); }
+";"               { printf("%s\n", yytext); }
+","               { printf("%s\n", yytext); }
+"%%"              { printf("%s\n", yytext); }
+[A-Z][a-z]*     {
+    printf("%s\n", yytext);
+}
+[ \t\n]              ;
+.               { printf("Errore %s\n", yytext); } // Ignora altri caratteri
 
 %%
+
 
 int main() {
     yylex();

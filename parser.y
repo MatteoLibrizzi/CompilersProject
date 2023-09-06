@@ -15,7 +15,7 @@
 %token<string> DATE SOC_SEC_NUM PART_NAME
 %token<number> NAT_NUM TRANSACTION_VALUE
 
-%token FIRST_SEC_END SECOND_SEC_END COLON PLUS MINUS SEMI_COLON COMMA SEPARATOR
+%token FIRST_SEC_END SECOND_SEC_END COLON SEMI_COLON COMMA SEPARATOR ERROR
 
 %%
 s: s1 FIRST_SEC_END s2 SECOND_SEC_END s3 { 
@@ -52,11 +52,14 @@ names: names PART_NAME { addPartialNameToCurrentList ($2);}
 %%
 
 int main() {
-    yyparse();
+    if (!yyparse()) {
 
-    output();
-    return 0;
+        output();
+        return 0;
+    } else {
+        printf("Errore sintattico\n");
+        return 1;
+    }
 }
 int yyerror (char* err) {
-    printf("Error %s\n", err);
 }
