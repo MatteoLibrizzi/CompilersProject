@@ -26,6 +26,7 @@ void addPartialNameToCurrentList (char* partialName) {
 void addCurrentNameListToCustomer (char* socialSecurityNumber) {
     Customer c = findCustomerBySocialSecurityNumber(customerListHead, socialSecurityNumber);
     if (c == NULL) {
+        currentNamesHead = NULL;
         return;
     }
     c->nameListHead = currentNamesHead;

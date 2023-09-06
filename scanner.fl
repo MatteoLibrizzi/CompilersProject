@@ -3,11 +3,10 @@
 #include <stdlib.h>
 #include "parser.tab.h"
 
-char * extractPattern(int headerLength, int totalLength, char* text) {
-    int length = totalLength - headerLength;
+char * extractPattern(int numberOfCharactersToIgnoreStart, int totalLength, char* text) {
+    int length = totalLength - numberOfCharactersToIgnoreStart;
     char *value = (char *)malloc(length + 1);
-    strncpy(value, text + headerLength, length);
-    value[length] = '\0';
+    strcpy(value, text + numberOfCharactersToIgnoreStart);
     return value;
 }
 
