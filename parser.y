@@ -3,6 +3,9 @@
 #include "symbolTable.h"
 #include "utils.h"
 #include "output.h"
+#include "transactionListOperations.h"
+#include "namesListOperations.h"
+#include "customerListOperations.h"
 %}
 %union{
     char* string;

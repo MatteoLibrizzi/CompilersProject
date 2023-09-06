@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.command": "shellscript",
+        "symboltable.h": "c",
+        "nameslistoperations.h": "c",
+        "customerlistoperations.h": "c"
+    }
+}
