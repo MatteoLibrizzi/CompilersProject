@@ -29,6 +29,10 @@ int isCustomerSuspicious(Customer c) {
     return positiveTransactionsTotal > 8000 || negativeTransactionsTotal < -8000;
 }
 
+int isCustomersNameKnown (Customer c) {
+    return c->nameListHead != NULL;
+}
+
 Customer* getSuspiciousCustomersWithNames(Customer node) {
     Customer* suspisiousCustomers = (Customer*) calloc(numberOfCustomers, sizeof(Customer));
     for (int i = 0; node != NULL; node = node->next) {
@@ -39,10 +43,6 @@ Customer* getSuspiciousCustomersWithNames(Customer node) {
     }
 
     return suspisiousCustomers;
-}
-
-int isCustomersNameKnown (Customer c) {
-    return c->nameListHead != NULL;
 }
 
 long countCustomersWithoutNames (Customer node) {
@@ -83,7 +83,7 @@ void printSuspiciousCustomers (Customer* suspisiousCustomers) {
         if (abs(positiveTransactionsTotal) > abs(negativeTransactionsTotal)) {
             printf("+ %ld", positiveTransactionsTotal);
         } else {
-            printf("- %ld",abs(negativeTransactionsTotal));
+            printf("- %d",abs(negativeTransactionsTotal));
         }
 
         printf("\n");
