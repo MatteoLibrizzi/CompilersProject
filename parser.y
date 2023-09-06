@@ -20,9 +20,15 @@ s: s1 FIRST_SEC_END s2 SECOND_SEC_END s3 { printf("Parser: Parsing completed suc
 s1: DATE { setDate($1); }
    ;
 
-s2: customer s2 { printf("Parser: Found customer section.\n"); }
+s2: transaction s2 { printf("Parser: Found customer section.\n"); }
    | /* eps */ { /* Empty rule for eps */ }
    ;
+
+transaction: SOC_SEC_NUM { printf("Found customer: %s\n", $1); Customer c = customerConstructor($1); setCurrentCustomer(c); addCustomerToList(c);}
+    | NAT_NUM COLON TRANSACTION_VALUE SEMI_COLON { printf("Amount: %ld\n", $3); addTransactionToCustomer(currentCustomer, $3); }
+    | SEPARATOR {}
+    | /* eps */
+    ;
 
 customer: SOC_SEC_NUM orders SEPARATOR { printf("Found customer: %s\n", $1); Customer c = customerConstructor($1); setCurrentCustomer(c); addCustomerToList(c);}
         ;
