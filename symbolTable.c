@@ -6,6 +6,7 @@ void init() {
     currentCustomer = NULL;
     currentNamesHead = NULL;
     numberOfCustomers = 0;
+    currentTransactionsHead = NULL;
 }
 
 void setDate (char* parsedDate){

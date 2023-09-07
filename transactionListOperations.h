@@ -8,8 +8,7 @@
 
 
 TransactionNode transactionNodeConstructor (long amount);
-
-void addTransactionToCustomer (Customer customer, long amount);
+void addTransactionToCurrentList (long amount);
 
 
 #endif

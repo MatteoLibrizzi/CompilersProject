@@ -104,5 +104,7 @@ void output() {
         printSuspiciousCustomers(suspisiousCustomers);
     }
 
-    printf("Numero di clienti con dati non definiti: %ld\n", customersWithoutNames);
+    if (customersWithoutNames) {
+        printf("Numero di clienti con dati non definiti: %ld\n", customersWithoutNames);
+    }
 }

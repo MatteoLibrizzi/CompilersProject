@@ -1,24 +1,20 @@
 #include "customerListOperations.h"
 
 
-Customer customerConstructor (char* socialSecurityNumber) {
+Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, PartialNameNode namesHead, Customer next) {
     Customer c = (Customer) malloc(sizeof(customer));
-    int length = strlen(socialSecurityNumber);
-    c->socialSecurityNumber = (char*) malloc(sizeof(char) * length);
+    c->socialSecurityNumber = (char*) malloc(sizeof(char) * (strlen(socialSecurityNumber) + 1));
     c->socialSecurityNumber = strcpy(c->socialSecurityNumber, socialSecurityNumber);
-    c->nameListHead = NULL;
-    c->transactionListHead = NULL;
-    c->next = NULL;
+    c->nameListHead = namesHead;
+    c->transactionListHead = transactionsHead;
+    c->next = next;
     return c;
 }
 
-void setCurrentCustomer (Customer c) {
-    currentCustomer = c;
-}
-
-void addCustomerToList (Customer c) {
+void addCurrentCustomerToList () {
     if (customerListHead == NULL) {
-        customerListHead = c;
+        customerListHead = currentCustomer;
+        currentCustomer = NULL;
         return;
     }
 
@@ -26,6 +22,20 @@ void addCustomerToList (Customer c) {
     while (node->next != NULL) {
         node = node->next;
     }
-    node->next = c;
+    node->next = currentCustomer;
     numberOfCustomers++;
+    currentCustomer = NULL;
+}
+
+
+void setCurrentCustomerData () {
+    currentCustomer = customerConstructor(currentSocialSecurityNumber, currentTransactionsHead, currentNamesHead, NULL);
+    currentTransactionsHead = NULL;
+    currentNamesHead = NULL;
+}
+
+
+void setCurrentSocialSecurityNumber (char* s) {
+    currentSocialSecurityNumber = (char*) malloc(sizeof(char)*(strlen(s)+1));
+    strcpy(currentSocialSecurityNumber, s);
 }

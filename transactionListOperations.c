@@ -9,17 +9,14 @@ TransactionNode transactionNodeConstructor (long amount) {
     return t;
 }
 
-void addTransactionToCustomer (Customer customer, long amount) {
+
+void addTransactionToCurrentList (long amount) {
     TransactionNode newNode = transactionNodeConstructor(amount);
-    if (customer == NULL) {
-        printf("aha\n");
+    if (currentTransactionsHead == NULL) {
+        currentTransactionsHead = newNode;
         return;
     }
-    if (customer->transactionListHead == NULL) {
-        customer->transactionListHead = newNode;
-        return;
-    }
-    TransactionNode node = customer->transactionListHead;
+    TransactionNode node = currentTransactionsHead;
     while (node->next != NULL) {
         node = node->next;
     }

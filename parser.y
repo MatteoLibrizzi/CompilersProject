@@ -31,13 +31,15 @@ s: s1 FIRST_SEC_END s2 SECOND_SEC_END s3 {
 s1: DATE { setDate($1); }
    ;
 
-s2: s2row s2 { }
+s2: customer s2 { }
    | /* eps */ { }
    ;
 
-s2row: SOC_SEC_NUM { Customer c = customerConstructor($1); setCurrentCustomer(c); addCustomerToList(c);}
-    | DAY_OF_MONTH COLON TRANSACTION_VALUE SEMI_COLON { addTransactionToCustomer(currentCustomer, $3); }
-    | SEPARATOR { }
+customer: SOC_SEC_NUM orders SEPARATOR { setCurrentSocialSecurityNumber($1); setCurrentCustomerData(); addCurrentCustomerToList();}
+    ;
+
+orders: DAY_OF_MONTH COLON TRANSACTION_VALUE SEMI_COLON orders { addTransactionToCurrentList($3); }
+    | /* eps */ {}
     ;
 
 s3: customer_data s3 { }
@@ -47,7 +49,7 @@ s3: customer_data s3 { }
 customer_data: names COMMA SOC_SEC_NUM SEMI_COLON { addCurrentNameListToCustomer($3); }
             ;
 
-names: names PART_NAME { addPartialNameToCurrentList ($2);}
+names: names PART_NAME { addPartialNameToCurrentList($2);}
      | /* eps */ { }
      ;
 
