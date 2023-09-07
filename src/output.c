@@ -35,14 +35,14 @@ int isCustomersNameKnown (Customer c) {
 
 Customer* getSuspiciousCustomersWithNames(Customer node) {
     Customer* suspisiousCustomers = (Customer*) calloc(numberOfCustomers, sizeof(Customer));
-    for (int i = 0; node != NULL; node = node->next) {
+    int i = 0;
+    for (; node != NULL; node = node->next) {
         if (isCustomersNameKnown(node) && isCustomerSuspicious(node)) {
             suspisiousCustomers[i] = node;
             i++;
         }
     }
-
-    return suspisiousCustomers;
+    return i == 0 ? NULL : suspisiousCustomers;
 }
 
 long countCustomersWithoutNames (Customer node) {
@@ -88,7 +88,7 @@ void output() {
     printf("%s\n", date);
     Customer* suspisiousCustomers = getSuspiciousCustomersWithNames(customerListHead);
 
-    if (suspisiousCustomers[0] == NULL) {
+    if (suspisiousCustomers == NULL) {
         printf("Nessun movimento sospetto\n");
     } else {
         printf("Si segnala:\n");
