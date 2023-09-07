@@ -14,7 +14,7 @@ int yyerror(char* s);
     char* string;
 }
 
-%token<string> DATE SOC_SEC_NUM PART_NAME NAMES
+%token<string> DATE SOC_SEC_NUM NAMES
 %token<number> DAY_OF_MONTH TRANSACTION_VALUE
 
 %token FIRST_SEC_END SECOND_SEC_END COLON SEMI_COLON COMMA SEPARATOR ERROR
@@ -41,12 +41,9 @@ orders: DAY_OF_MONTH COLON TRANSACTION_VALUE SEMI_COLON orders { addTransactionT
     | /* eps */ {}
     ;
 
-s3: customer_data s3 { }
+s3: NAMES COMMA SOC_SEC_NUM SEMI_COLON s3 { addNamesToCustomer($3, $1); }
    | /* eps */ { }
    ;
-
-customer_data: NAMES COMMA SOC_SEC_NUM SEMI_COLON { addNamesToCustomer($3, $1); }
-            ;
 
 %%
 

@@ -7,7 +7,6 @@
 #include <stdlib.h>
 
 
-TransactionNode transactionNodeConstructor (long amount);
 void addTransactionToCurrentList (long amount);
 
 

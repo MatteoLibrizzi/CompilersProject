@@ -2,6 +2,7 @@
 #define __SYMB_
 #include "types.h"
 
+#define SUSPICIOUS_TRESHOLD 8000
 char* date;
 Customer customerListHead;
 Customer currentCustomer;

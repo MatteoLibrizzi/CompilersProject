@@ -1,12 +1,6 @@
 #include "../headers/utils.h"
 
-Customer findCustomerBySocialSecurityNumber (Customer node, char* socialSecurityNumber) {
-    while (node != NULL && strcmp(node->socialSecurityNumber, socialSecurityNumber)) {
-        node = node->next;
-    }
-    
-    return node;
-}
+
 
 void printCustomerList (Customer head) {
     Customer node = head;

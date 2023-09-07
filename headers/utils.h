@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// returns null if it is not found
-Customer findCustomerBySocialSecurityNumber (Customer head, char* socialSecurityNumber);
 void printCustomerList (Customer head);
 void printCustomerListWithTransactions (Customer head);
 void printCustomerListWithTransactionsAndNames (Customer head);

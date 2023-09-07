@@ -26,7 +26,7 @@ int isCustomerSuspicious(Customer c) {
     long positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
     long negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
 
-    return positiveTransactionsTotal > 8000 || negativeTransactionsTotal < -8000;
+    return positiveTransactionsTotal > SUSPICIOUS_TRESHOLD || negativeTransactionsTotal < -SUSPICIOUS_TRESHOLD;
 }
 
 int isCustomersNameKnown (Customer c) {
@@ -87,7 +87,6 @@ void printSuspiciousCustomers (Customer* suspisiousCustomers) {
 void output() {
     printf("%s\n", date);
     Customer* suspisiousCustomers = getSuspiciousCustomersWithNames(customerListHead);
-    long customersWithoutNames = countCustomersWithoutNames(customerListHead);
 
     if (suspisiousCustomers[0] == NULL) {
         printf("Nessun movimento sospetto\n");
@@ -96,6 +95,7 @@ void output() {
         printSuspiciousCustomers(suspisiousCustomers);
     }
 
+    long customersWithoutNames = countCustomersWithoutNames(customerListHead);
     if (customersWithoutNames) {
         printf("Numero di clienti con dati non definiti: %ld\n", customersWithoutNames);
     }

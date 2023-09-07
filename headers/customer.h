@@ -7,10 +7,6 @@
 #include <string.h>
 #include "utils.h"
 
-Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, char* names, Customer next);
-
-
-void addCustomerToList ();
 void setCurrentCustomerData();
 void addCurrentCustomerToList ();
 void setCurrentSocialSecurityNumber (char* s);

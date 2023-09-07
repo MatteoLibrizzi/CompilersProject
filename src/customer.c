@@ -39,6 +39,14 @@ void setCurrentSocialSecurityNumber (char* s) {
     strcpy(currentSocialSecurityNumber, s);
 }
 
+Customer findCustomerBySocialSecurityNumber (Customer node, char* socialSecurityNumber) {
+    while (node != NULL && strcmp(node->socialSecurityNumber, socialSecurityNumber)) {
+        node = node->next;
+    }
+    
+    return node;
+}
+
 void addNamesToCustomer(char* socialSecurityNumber, char* names) {
     Customer c = findCustomerBySocialSecurityNumber(customerListHead, socialSecurityNumber);
     if (c == NULL) {
