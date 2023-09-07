@@ -7,7 +7,5 @@
 #include <string.h>
 #include "utils.h"
 
-PartialNameNode partialNameNodeConstructor (char* partialName);
-void addPartialNameToCurrentList (char* partialName);
-void addCurrentNameListToCustomer (char* socialSecurityNumber);
+void addNamesToCustomer(char* names, char* socialSecurityNumber);
 #endif

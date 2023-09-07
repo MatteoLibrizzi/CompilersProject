@@ -1,14 +1,9 @@
-#ifndef __SYM_TABL_
-#define __SYM_TABL_
+#ifndef __SET_DATE_
+#define __SET_DATE_
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "types.h"
-#include "utils.h"
 #include "symbols.h"
-
-
-void init();
 
 void setDate (char* parsedDate);
 

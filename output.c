@@ -30,7 +30,7 @@ int isCustomerSuspicious(Customer c) {
 }
 
 int isCustomersNameKnown (Customer c) {
-    return c->nameListHead != NULL;
+    return c->names != NULL;
 }
 
 Customer* getSuspiciousCustomersWithNames(Customer node) {
@@ -62,16 +62,8 @@ void printSuspiciousCustomers (Customer* suspisiousCustomers) {
     Customer c = suspisiousCustomers[i];
 
     while (c != NULL) {
-        
-        PartialNameNode name = c->nameListHead;
-        while (name != NULL) {
-            printf("%s", name->partialName);
-            name = name->next;
-            if (name != NULL) {
-                printf(" ");
-            } else {
-                printf(", ");
-            }
+        if (c->names != NULL) {
+            printf("%s, ",c->names);
         }
 
         printf("%s, ",c->socialSecurityNumber);

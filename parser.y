@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "symbolTable.h"
+#include "setDate.h"
 #include "utils.h"
 #include "output.h"
 #include "transactionListOperations.h"
@@ -15,7 +15,7 @@ int yyerror(char* s);
     long number;
 }
 
-%token<string> DATE SOC_SEC_NUM PART_NAME
+%token<string> DATE SOC_SEC_NUM PART_NAME NAMES
 %token<number> DAY_OF_MONTH TRANSACTION_VALUE
 
 %token FIRST_SEC_END SECOND_SEC_END COLON SEMI_COLON COMMA SEPARATOR ERROR
@@ -46,24 +46,18 @@ s3: customer_data s3 { }
    | /* eps */ { }
    ;
 
-customer_data: names COMMA SOC_SEC_NUM SEMI_COLON { addCurrentNameListToCustomer($3); }
+customer_data: NAMES COMMA SOC_SEC_NUM SEMI_COLON { addNamesToCustomer($3, $1); }
             ;
-
-names: names PART_NAME { addPartialNameToCurrentList($2);}
-     | /* eps */ { }
-     ;
 
 %%
 
 int main() {
     if (!yyparse()) {
-
         output();
         return 0;
-    } else {
-        printf("Errore sintattico\n");
-        return 1;
     }
+    return 1;
 }
 int yyerror (char* err) {
+    printf("Errore sintattico\n");
 }

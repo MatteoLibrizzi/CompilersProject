@@ -7,7 +7,7 @@
 #include <string.h>
 #include "utils.h"
 
-Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, PartialNameNode namesHead, Customer next);
+Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, char* names, Customer next);
 
 
 void addCustomerToList ();

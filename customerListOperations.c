@@ -1,11 +1,11 @@
 #include "customerListOperations.h"
 
 
-Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, PartialNameNode namesHead, Customer next) {
+Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, char* names, Customer next) {
     Customer c = (Customer) malloc(sizeof(customer));
     c->socialSecurityNumber = (char*) malloc(sizeof(char) * (strlen(socialSecurityNumber) + 1));
     c->socialSecurityNumber = strcpy(c->socialSecurityNumber, socialSecurityNumber);
-    c->nameListHead = namesHead;
+    //c->names = names;
     c->transactionListHead = transactionsHead;
     c->next = next;
     return c;
@@ -29,9 +29,8 @@ void addCurrentCustomerToList () {
 
 
 void setCurrentCustomerData () {
-    currentCustomer = customerConstructor(currentSocialSecurityNumber, currentTransactionsHead, currentNamesHead, NULL);
+    currentCustomer = customerConstructor(currentSocialSecurityNumber, currentTransactionsHead, NULL, NULL);
     currentTransactionsHead = NULL;
-    currentNamesHead = NULL;
 }
 
 

@@ -9,6 +9,5 @@
 Customer findCustomerBySocialSecurityNumber (Customer head, char* socialSecurityNumber);
 void printCustomerList (Customer head);
 void printCustomerListWithTransactions (Customer head);
-void printNames (PartialNameNode node);
 void printCustomerListWithTransactionsAndNames (Customer head);
 #endif

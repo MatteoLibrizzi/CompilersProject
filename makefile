@@ -1,8 +1,5 @@
-
-tokens: out
-	./out < input.txt
-out: lex.yy.c parser.tab.c symbolTable.c utils.c output.c customerListOperations.c namesListOperations.c transactionListOperations.c
-	gcc $^ -o out
+parser: lex.yy.c parser.tab.c setDate.c utils.c output.c customerListOperations.c namesListOperations.c transactionListOperations.c
+	gcc $^ -o parser
 
 parser.tab.c: parser.y
 	bison -d $^
@@ -11,6 +8,6 @@ lex.yy.c: scanner.fl
 	flex $^
 
 clean:
-	rm out
+	rm parser
 	rm lex.yy.c
 	rm parser.tab.*

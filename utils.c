@@ -47,34 +47,12 @@ void printCustomerListWithTransactions (Customer head) {
     printCustomerTransactionList(node);
 }
 
-void printNames (PartialNameNode node) {
-    if (node == NULL) {
-        printf("NULL\n");
-        return;
-    }
-    while (node->next != NULL) {
-        printf("%s -> ", node->partialName);
-        node = node->next;
-    }
-    printf("%s -> NULL\n", node->partialName);
-}
-
-
-void printCustomerListWithTransactionsAndNames (Customer head) {
-    Customer node = head;
-    if (node == NULL) {
-        printf("NULL\n");
-        return;
-    }
-    while (node->next != NULL) {
+void printCustomerListWithTransactionsAndNames (Customer node) {
+    while (node != NULL) {
         printf("%s\n    ", node->socialSecurityNumber);
         printCustomerTransactionList(node);
-        printf("    ");
-        printNames(node->nameListHead);
-        node = node->next;
+        if (node->names) {
+            printf("    %s\n",node->names);
+        }
     }
-    printf("%s\n    ", node->socialSecurityNumber);
-    printCustomerTransactionList(node);
-    printf("    ");
-    printNames(node->nameListHead);
 }

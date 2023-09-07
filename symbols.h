@@ -6,7 +6,6 @@ char* date;
 Customer customerListHead;
 Customer currentCustomer;
 int numberOfCustomers;
-PartialNameNode currentNamesHead;
 TransactionNode currentTransactionsHead;
 char* currentSocialSecurityNumber;
 
