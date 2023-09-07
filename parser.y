@@ -1,18 +1,17 @@
 %{
 #include <stdio.h>
-#include "setDate.h"
-#include "utils.h"
-#include "output.h"
-#include "transactionListOperations.h"
-#include "namesListOperations.h"
-#include "customerListOperations.h"
+#include "headers/setDate.h"
+#include "headers/utils.h"
+#include "headers/output.h"
+#include "headers/transactions.h"
+#include "headers/customer.h"
 
 int yylex();
 int yyerror(char* s);
 %}
 %union{
-    char* string;
     long number;
+    char* string;
 }
 
 %token<string> DATE SOC_SEC_NUM PART_NAME NAMES

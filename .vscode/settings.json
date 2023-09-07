@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "*.command": "shellscript",
-        "nameslistoperations.h": "c"
+        "nameslistoperations.h": "c",
+        "customer.h": "c",
+        "symbols.h": "c",
+        "utils.h": "c",
+        "types.h": "c"
     }
 }

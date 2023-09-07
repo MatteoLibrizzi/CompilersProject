@@ -1,4 +1,4 @@
-#include "transactionListOperations.h"
+#include "../headers/transactions.h"
 
 
 TransactionNode transactionNodeConstructor (long amount) {

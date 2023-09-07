@@ -1,4 +1,4 @@
-parser: lex.yy.c parser.tab.c setDate.c utils.c output.c customerListOperations.c namesListOperations.c transactionListOperations.c
+parser: lex.yy.c parser.tab.c src/setDate.c src/utils.c src/output.c src/customer.c src/transactions.c
 	gcc $^ -o parser
 
 parser.tab.c: parser.y

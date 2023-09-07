@@ -1,4 +1,4 @@
-#include "setDate.h"
+#include "../headers/setDate.h"
 
 void setDate (char* parsedDate){
     int length = strlen(parsedDate);

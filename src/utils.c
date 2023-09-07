@@ -1,4 +1,4 @@
-#include "utils.h"
+#include "../headers/utils.h"
 
 Customer findCustomerBySocialSecurityNumber (Customer node, char* socialSecurityNumber) {
     while (node != NULL && strcmp(node->socialSecurityNumber, socialSecurityNumber)) {

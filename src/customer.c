@@ -1,11 +1,11 @@
-#include "customerListOperations.h"
+#include "../headers/customer.h"
 
 
 Customer customerConstructor (char* socialSecurityNumber, TransactionNode transactionsHead, char* names, Customer next) {
     Customer c = (Customer) malloc(sizeof(customer));
     c->socialSecurityNumber = (char*) malloc(sizeof(char) * (strlen(socialSecurityNumber) + 1));
     c->socialSecurityNumber = strcpy(c->socialSecurityNumber, socialSecurityNumber);
-    //c->names = names;
+    c->names = names;
     c->transactionListHead = transactionsHead;
     c->next = next;
     return c;
@@ -37,4 +37,13 @@ void setCurrentCustomerData () {
 void setCurrentSocialSecurityNumber (char* s) {
     currentSocialSecurityNumber = (char*) malloc(sizeof(char)*(strlen(s)+1));
     strcpy(currentSocialSecurityNumber, s);
+}
+
+void addNamesToCustomer(char* socialSecurityNumber, char* names) {
+    Customer c = findCustomerBySocialSecurityNumber(customerListHead, socialSecurityNumber);
+    if (c == NULL) {
+        return;
+    }
+    c->names = (char*) malloc(sizeof(char)* (strlen(names)+1));
+    c->names = strcpy(c->names, names);
 }

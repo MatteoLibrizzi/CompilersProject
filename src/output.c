@@ -1,4 +1,4 @@
-#include "output.h"
+#include "../headers/output.h"
 
 long getPositiveTransactionsAmount (TransactionNode node) {
     long amount = 0;

@@ -13,8 +13,7 @@ Customer customerConstructor (char* socialSecurityNumber, TransactionNode transa
 void addCustomerToList ();
 void setCurrentCustomerData();
 void addCurrentCustomerToList ();
-
-
 void setCurrentSocialSecurityNumber (char* s);
+void addNamesToCustomer(char* names, char* socialSecurityNumber);
 
 #endif
