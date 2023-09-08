@@ -10,12 +10,14 @@ int yylex();
 int yyerror(char* s);
 %}
 %union{
-    long number;
+    long integer;
     char* string;
+    double real;
 }
 
 %token<string> DATE SOC_SEC_NUM NAMES
-%token<number> DAY_OF_MONTH TRANSACTION_VALUE
+%token<integer> DAY_OF_MONTH
+%token<real> TRANSACTION_VALUE
 
 %token FIRST_SEC_END SECOND_SEC_END COLON SEMI_COLON COMMA SEPARATOR ERROR
 

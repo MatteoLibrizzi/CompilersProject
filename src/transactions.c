@@ -1,7 +1,7 @@
 #include "../headers/transactions.h"
 
 
-TransactionNode transactionNodeConstructor (long amount) {
+TransactionNode transactionNodeConstructor (double amount) {
     TransactionNode t = (TransactionNode) malloc(sizeof(transactionNode));
     t->next = NULL;
     t->amount = amount;
@@ -10,7 +10,7 @@ TransactionNode transactionNodeConstructor (long amount) {
 }
 
 
-void addTransactionToCurrentList (long amount) {
+void addTransactionToCurrentList (double amount) {
     TransactionNode newNode = transactionNodeConstructor(amount);
     if (currentTransactionsHead == NULL) {
         currentTransactionsHead = newNode;

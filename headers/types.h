@@ -2,7 +2,7 @@
 #define __TYPES_
 
 typedef struct transactionNode {
-    long amount;
+    double amount;
     struct transactionNode * next;
 } transactionNode;
 typedef struct transactionNode * TransactionNode;

@@ -3,6 +3,7 @@
 #include "setDate.h"
 #include "utils.h"
 #include "types.h"
+#include <math.h>
 
 void output();
 

@@ -1,7 +1,7 @@
 #include "../headers/output.h"
 
-long getPositiveTransactionsAmount (TransactionNode node) {
-    long amount = 0;
+double getPositiveTransactionsAmount (TransactionNode node) {
+    double amount = 0;
     while (node != NULL) {
         if (node->amount > 0) {
             amount += node->amount;
@@ -11,8 +11,8 @@ long getPositiveTransactionsAmount (TransactionNode node) {
     return amount;
 }
 
-long getNegativeTransactionsAmount (TransactionNode node) {
-    long amount = 0;
+double getNegativeTransactionsAmount (TransactionNode node) {
+    double amount = 0;
     while (node != NULL) {
         if (node->amount < 0) {
             amount += node->amount;
@@ -23,8 +23,8 @@ long getNegativeTransactionsAmount (TransactionNode node) {
 }
 
 int isCustomerSuspicious(Customer c) {
-    long positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
-    long negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
+    double positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
+    double negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
 
     return positiveTransactionsTotal > SUSPICIOUS_TRESHOLD || negativeTransactionsTotal < -SUSPICIOUS_TRESHOLD;
 }
@@ -69,13 +69,13 @@ void printSuspiciousCustomers (Customer* suspisiousCustomers) {
         printf("%s, ",c->socialSecurityNumber);
 
 
-        long positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
-        long negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
+        double positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
+        double negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
 
-        if (abs(positiveTransactionsTotal) > abs(negativeTransactionsTotal)) {
-            printf("+ %ld", positiveTransactionsTotal);
+        if (fabs(positiveTransactionsTotal) > fabs(negativeTransactionsTotal)) {
+            printf("+ %.*lf", SIGNIFICANT_DIGITS, positiveTransactionsTotal);
         } else {
-            printf("- %d",abs(negativeTransactionsTotal));
+            printf("- %.*lf", SIGNIFICANT_DIGITS, fabs(negativeTransactionsTotal));
         }
 
         printf("\n");

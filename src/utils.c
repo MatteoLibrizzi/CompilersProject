@@ -21,10 +21,10 @@ void printCustomerTransactionList (Customer c) {
         return;
     }
     while (node->next != NULL) {
-        printf("%ld -> ", node->amount);
+        printf("%lf -> ", node->amount);
         node = node->next;
     }
-    printf("%ld -> NULL\n", node->amount);
+    printf("%lf -> NULL\n", node->amount);
 }
 
 void printCustomerListWithTransactions (Customer head) {

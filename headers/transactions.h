@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-void addTransactionToCurrentList (long amount);
+void addTransactionToCurrentList (double amount);
 
 
 #endif
