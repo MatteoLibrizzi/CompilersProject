@@ -5,7 +5,6 @@
 #include "types.h"
 #include "symbols.h"
 #include <string.h>
-#include "utils.h"
 
 void setCurrentCustomerData();
 void addCurrentCustomerToList ();

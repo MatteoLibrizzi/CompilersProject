@@ -1,7 +1,6 @@
 %{
 #include <stdio.h>
 #include "headers/setDate.h"
-#include "headers/utils.h"
 #include "headers/output.h"
 #include "headers/transactions.h"
 #include "headers/customer.h"
