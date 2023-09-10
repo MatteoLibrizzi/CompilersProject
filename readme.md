@@ -4,8 +4,12 @@
 This is the project I completed for the subject "compilers" in the third year of my bachelor in computer science.
 
 
+Make using: 
+
+```make```
 
 Run with this command:
+
 ```for FILE in resources/*; do printf "Input File: %s\n\n" $FILE; ./parser < $FILE; printf "\n----------\n"; done```
 
 Teacher: Sabrina Mantaci
