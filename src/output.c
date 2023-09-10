@@ -1,9 +1,12 @@
 #include "../headers/output.h"
 
-double getPositiveTransactionsAmount (TransactionNode node) {
+double getPositiveTransactionsAmount(TransactionNode node)
+{
     double amount = 0;
-    while (node != NULL) {
-        if (node->amount > 0) {
+    while (node != NULL)
+    {
+        if (node->amount > 0)
+        {
             amount += node->amount;
         }
         node = node->next;
@@ -11,10 +14,13 @@ double getPositiveTransactionsAmount (TransactionNode node) {
     return amount;
 }
 
-double getNegativeTransactionsAmount (TransactionNode node) {
+double getNegativeTransactionsAmount(TransactionNode node)
+{
     double amount = 0;
-    while (node != NULL) {
-        if (node->amount < 0) {
+    while (node != NULL)
+    {
+        if (node->amount < 0)
+        {
             amount += node->amount;
         }
         node = node->next;
@@ -22,34 +28,47 @@ double getNegativeTransactionsAmount (TransactionNode node) {
     return amount;
 }
 
-int isCustomerSuspicious(Customer c) {
+int isAmountSuspicious(double val)
+{
+    return fabs(val) > SUSPICIOUS_TRESHOLD;
+}
+
+int isCustomerSuspicious(Customer c)
+{
     double positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
     double negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
 
-    return positiveTransactionsTotal > SUSPICIOUS_TRESHOLD || negativeTransactionsTotal < -SUSPICIOUS_TRESHOLD;
+    return isAmountSuspicious(positiveTransactionsTotal) || isAmountSuspicious(negativeTransactionsTotal);
 }
 
-int isCustomersNameKnown (Customer c) {
+int isCustomersNameKnown(Customer c)
+{
     return c->names != NULL;
 }
 
-Customer* getSuspiciousCustomersWithNames(Customer node) {
-    Customer* suspisiousCustomers = (Customer*) calloc(numberOfCustomers, sizeof(Customer));
-    int i = 0;
-    for (; node != NULL; node = node->next) {
-        if (isCustomersNameKnown(node) && isCustomerSuspicious(node)) {
-            suspisiousCustomers[i] = node;
-            i++;
+int numberOfSuspiciousCustomersWithNames = 0;
+Customer *getSuspiciousCustomersWithNames(Customer node)
+{
+    Customer *suspisiousCustomers = (Customer *)calloc(numberOfCustomers, sizeof(Customer));
+    for (; node != NULL; node = node->next)
+    {
+        if (isCustomersNameKnown(node) && isCustomerSuspicious(node))
+        {
+            suspisiousCustomers[numberOfSuspiciousCustomersWithNames] = node;
+            numberOfSuspiciousCustomersWithNames++;
         }
     }
-    return i == 0 ? NULL : suspisiousCustomers;
+    return numberOfSuspiciousCustomersWithNames == 0 ? NULL : suspisiousCustomers;
 }
 
-long countCustomersWithoutNames (Customer node) {
+long countCustomersWithoutNames(Customer node)
+{
     int count = 0;
 
-    while (node != NULL) {
-        if (!isCustomersNameKnown(node)) {
+    while (node != NULL)
+    {
+        if (!isCustomersNameKnown(node))
+        {
             count++;
         }
         node = node->next;
@@ -57,46 +76,86 @@ long countCustomersWithoutNames (Customer node) {
     return count;
 }
 
-void printSuspiciousCustomers (Customer* suspisiousCustomers) {
+void printSuspiciousCustomer(Customer c, double amt)
+{
+    if (c->names != NULL)
+    {
+        printf("%s, ", c->names);
+    }
+
+    printf("%s, ", c->socialSecurityNumber);
+    if (amt > 0)
+    {
+        printf("+ %.*lf", SIGNIFICANT_DIGITS, amt);
+    }
+    else
+    {
+        printf("- %.*lf", SIGNIFICANT_DIGITS, fabs(amt));
+    }
+    printf("\n");
+}
+
+void printSuspiciousCustomers(Customer *suspisiousCustomers)
+{
     int i = 0;
     Customer c = suspisiousCustomers[i];
 
-    while (c != NULL) {
-        if (c->names != NULL) {
-            printf("%s, ",c->names);
-        }
-
-        printf("%s, ",c->socialSecurityNumber);
-
-
+    while (c != NULL)
+    {
         double positiveTransactionsTotal = getPositiveTransactionsAmount(c->transactionListHead);
         double negativeTransactionsTotal = getNegativeTransactionsAmount(c->transactionListHead);
 
-        if (fabs(positiveTransactionsTotal) > fabs(negativeTransactionsTotal)) {
-            printf("+ %.*lf", SIGNIFICANT_DIGITS, positiveTransactionsTotal);
-        } else {
-            printf("- %.*lf", SIGNIFICANT_DIGITS, fabs(negativeTransactionsTotal));
+        if (isAmountSuspicious(positiveTransactionsTotal)) {
+            printSuspiciousCustomer(c, positiveTransactionsTotal);
         }
-
-        printf("\n");
+        if (isAmountSuspicious(negativeTransactionsTotal)) {
+            printSuspiciousCustomer(c, negativeTransactionsTotal);
+        }
         i++;
         c = suspisiousCustomers[i];
     }
 }
 
-void output() {
-    printf("%s\n", date);
-    Customer* suspisiousCustomers = getSuspiciousCustomersWithNames(customerListHead);
+// insertion sort
+void sortCustomersByName(Customer *customers, int n)
+{
+    int i, j;
+    char *key;
+    for (i = 1; i < n; i++)
+    {
+        Customer backup = customers[i];
+        key = customers[i]->names;
+        j = i - 1;
 
-    if (suspisiousCustomers == NULL) {
+        while (j >= 0 && strcmp(customers[j]->names, key) > 0)
+        {
+            customers[j + 1] = customers[j];
+            j = j - 1;
+        }
+        customers[j + 1] = backup;
+    }
+}
+
+void output()
+{
+    printf("%s\n", date);
+    Customer *suspisiousCustomers = getSuspiciousCustomersWithNames(customerListHead);
+
+    sortCustomersByName(suspisiousCustomers, numberOfSuspiciousCustomersWithNames);
+
+    if (suspisiousCustomers == NULL)
+    {
         printf("Nessun movimento sospetto\n");
-    } else {
+    }
+    else
+    {
         printf("Si segnala:\n");
         printSuspiciousCustomers(suspisiousCustomers);
     }
 
     long customersWithoutNames = countCustomersWithoutNames(customerListHead);
-    if (customersWithoutNames) {
+    if (customersWithoutNames)
+    {
         printf("Numero di clienti con dati non definiti: %ld\n", customersWithoutNames);
     }
 }
